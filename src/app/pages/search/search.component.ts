@@ -95,6 +95,10 @@ export class SearchComponent implements OnInit {
       const parseObj=JSON.parse(strObj);
       this.passengerList.push(parseObj);
     }
+    removePassenger(index: number) {
+      this.passengerList.splice(index, 1); // Removes the passenger at the specified index
+  }
+  
 
     bookTicket(){
       const bookingObj={

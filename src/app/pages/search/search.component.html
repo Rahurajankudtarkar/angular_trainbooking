@@ -64,7 +64,7 @@
             <!-- Modal Header -->
             <div class="modal-header">
                 <h5 class="modal-title">Book Ticket</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="closeBookingModel()"></button>
             </div>
 
             <!-- Modal body -->
@@ -108,7 +108,7 @@
                                     <td>{{item.passengerName}}</td>
                                     <td>{{item.age}}</td>
                                     <td>
-                                        <button class="btn btn-danger btn-sm">Remove</button>
+                                        <button class="btn btn-danger btn-sm" (click)="removePassenger($index)">Remove</button>
                                     </td>
                                 </tr>
                             }
