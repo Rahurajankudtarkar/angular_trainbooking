@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { APIResponse, Customer } from '../model/train';
+import { APIResponse, Customer, ITrainBooking } from '../model/train';
+import { Observable } from 'rxjs/internal/Observable';
 
 @Injectable({
   providedIn: 'root'
@@ -28,4 +29,20 @@ export class TrainService {
   bookTrain(obj:any){
     return this.http.post<APIResponse>(`${this.apiUrl}BookTrain`,obj)
   }
+
+  // train.service.ts
+// train.service.ts
+// check avibility
+
+
+  
+
+getTrainBookings(departureStationId: string, arrivalStationId: string, departureDate: string): Observable<{ result: boolean, data: ITrainBooking[] }> {
+  const url = `${this.apiUrl}GetTrainBookings?departureStationId=${departureStationId}&arrivalStationId=${arrivalStationId}&departureDate=${departureDate}`;
+  return this.http.get<{ result: boolean, data: ITrainBooking[] }>(url);
+}
+
+
+
+
 }

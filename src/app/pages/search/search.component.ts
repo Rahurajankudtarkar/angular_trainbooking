@@ -1,9 +1,10 @@
 import { Component, Inject, inject,OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { APIResponse, Customer, IStation, ITrain, Search } from '../../model/train';
+import { APIResponse, Customer, IStation, ITrain, ITrainBooking,  Search } from '../../model/train';
 import { TrainService } from '../../service/train.service';
 import { DatePipe, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+
 
 @Component({
   selector: 'app-search',
@@ -31,6 +32,9 @@ export class SearchComponent implements OnInit {
   //logged user data
   loggedUserData: Customer =new Customer();
 
+  
+ 
+
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {
     // Only access localStorage if the platform is a browser
     if (isPlatformBrowser(this.platformId)) {
@@ -57,6 +61,8 @@ export class SearchComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadAllStation();
+    //check avaibility
+    this.searchdatas.dateOfTravel = '2024-09-09';
     
 }
 
@@ -86,7 +92,7 @@ export class SearchComponent implements OnInit {
       const model = document.getElementById("myBookModal");
       if (model != null) {
         model.style.display = 'none';
-      }
+      }``
     }
     
     addPassenger(){
@@ -119,5 +125,42 @@ export class SearchComponent implements OnInit {
           alert(res.message)
         }
       })
+    }
+
+    ///check avaibility
+  bookings: ITrainBooking[] = [];
+  selectedTrainSeats: number = 0;
+  searchdatas = {
+    dateOfTravel: ''
+  };
+    
+    // In your component.ts file
+    checkAvailability(trainId: number, departureStationId: string, arrivalStationId: string, departureDate: string) {
+      console.log(trainId,departureStationId,arrivalStationId,departureDate);
+      this.openchecking();
+      this.tarinerService.getTrainBookings('2', '20', '2024-09-09'  ).subscribe((response: any) => {
+        const selectedTrain = response.data.find((train: { trainId: number; }) => train.trainId === trainId);
+        
+        if (selectedTrain) {
+          this.selectedTrainSeats = selectedTrain.totalAvailableSeats;
+          // this.openchecking();// Open modal to display seats availability
+        }
+      });
+    }
+    // Function to open modal
+  
+    openchecking() {
+      const model = document.getElementById("mycheck");
+      if (model != null) {
+        model.style.display = 'block';
+      }
+    }
+   
+
+    closechecking() {
+      const model = document.getElementById("mycheck");
+      if (model != null) {
+        model.style.display = 'none';
+      }
     }
 }

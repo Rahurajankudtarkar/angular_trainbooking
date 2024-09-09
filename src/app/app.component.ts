@@ -1,4 +1,4 @@
-import { Component, inject, Inject, PLATFORM_ID } from '@angular/core';
+import {  Component, inject, Inject, PLATFORM_ID } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HomeComponent } from "./pages/home/home.component";
 import { APIResponse, Customer } from './model/train';
@@ -13,7 +13,7 @@ import { isPlatformBrowser } from '@angular/common';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'] // Corrected "styleUrl" to "styleUrls"
 })
-export class AppComponent {
+export class AppComponent  {
   title = 'TRAIN_BOOKING_APP_ANGULAR';
   registerObj: Customer = new Customer();
   trainService = inject(TrainService);
@@ -104,4 +104,7 @@ export class AppComponent {
       model.style.display = 'none';
     }
   }
+  //avaibility check
+  
+  
 }
