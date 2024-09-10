@@ -82,11 +82,11 @@
                 <div class="row pt-1">
                     <div class="col-6 mt-2">
                         <label for="">Passenger Name</label>
-                        <input type="text" class="form-control" [(ngModel)]="passenger.passengerName">
+                        <input type="text" class="form-control" [(ngModel)]="passenger.passengerName" required="required">
                     </div>
                     <div class="col-3">
                         <label for="">Age</label>
-                        <input type="text" class="form-control" [(ngModel)]="passenger.age">
+                        <input type="text" class="form-control" [(ngModel)]="passenger.age" required="required">
                     </div>
                     <div class="col-3  text-end pt-4">
                         <button class="btn btn-sm btn-primary" (click)="addPassenger()">Add</button>

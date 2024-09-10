@@ -63,6 +63,12 @@ export class SearchComponent implements OnInit {
     this.loadAllStation();
     //check avaibility
     this.searchdatas.dateOfTravel = '2024-09-09';
+      //check and convert station name to id
+    this.tarinerService.getAllStations().subscribe((response) => {
+      if (response.result) {
+        this.tarinerService.setStationWithId(response.data); // Save station data
+      }
+    });
     
 }
 
@@ -95,12 +101,36 @@ export class SearchComponent implements OnInit {
       }``
     }
     
-    addPassenger(){
-      //to change the reference because if we change name it will change other
-      const strObj=JSON.stringify(this.passenger);
-      const parseObj=JSON.parse(strObj);
+    // addPassenger(){
+    //   //to change the reference because if we change name it will change other
+    //   const strObj=JSON.stringify(this.passenger);
+    //   const parseObj=JSON.parse(strObj);
+    //   this.passengerList.push(parseObj);
+    // }
+    addPassenger() {
+      // Validate that passengerName is not empty and age is a valid positive number
+      if (!this.passenger.passengerName || this.passenger.passengerName.trim() === '') {
+        alert('Passenger Name is required');
+        return;
+      }
+      
+      if (!this.passenger.age || isNaN(this.passenger.age) || +this.passenger.age <= 0) {
+        alert('Valid Age is required');
+        return;
+      }
+    
+      // Change the reference to avoid modifying the original object when changing the fields
+      const strObj = JSON.stringify(this.passenger);
+      const parseObj = JSON.parse(strObj);
+      
+      // Add the passenger to the list
       this.passengerList.push(parseObj);
+    
+      // Clear the input fields after adding the passenger
+      this.passenger.passengerName = '';
+      this.passenger.age = '';
     }
+    
     removePassenger(index: number) {
       this.passengerList.splice(index, 1); // Removes the passenger at the specified index
   }
@@ -136,17 +166,43 @@ export class SearchComponent implements OnInit {
     
     // In your component.ts file
     checkAvailability(trainId: number, departureStationId: string, arrivalStationId: string, departureDate: string) {
-      console.log(trainId,departureStationId,arrivalStationId,departureDate);
-      this.openchecking();
-      this.tarinerService.getTrainBookings('2', '20', '2024-09-09'  ).subscribe((response: any) => {
-        const selectedTrain = response.data.find((train: { trainId: number; }) => train.trainId === trainId);
+       console.log(trainId,departureStationId,arrivalStationId,departureDate);
+      // this.openchecking();
+      // this.tarinerService.getTrainBookings('2', '20', '2024-09-09'  ).subscribe((response: any) => {
+      //   const selectedTrain = response.data.find((train: { trainId: number; }) => train.trainId === trainId);
         
-        if (selectedTrain) {
-          this.selectedTrainSeats = selectedTrain.totalAvailableSeats;
-          // this.openchecking();// Open modal to display seats availability
-        }
-      });
+      //   if (selectedTrain) {
+      //     this.selectedTrainSeats = selectedTrain.totalAvailableSeats;
+      //     // this.openchecking();// Open modal to display seats availability
+      //   }
+      // });
+      //check staion and conert station name to id
+      const departureStationIds = this.tarinerService.getStationIdByName(departureStationId);
+      const arrivalStationIds = this.tarinerService.getStationIdByName(arrivalStationId);
+      console.log(trainId,departureStationIds,arrivalStationIds,departureDate);
+  
+      if (departureStationIds && arrivalStationIds) {
+        // Ensure departureDate is in 'YYYY-MM-DD' format
+        const formattedDate ='2024-09-09';
+        console.log(trainId,departureStationIds,arrivalStationIds,formattedDate);
+  
+        this.tarinerService.getTrainBookings(departureStationIds.toString(), arrivalStationIds.toString(), formattedDate)
+          .subscribe((response) => {
+            // Logic to find selected train and update available seats
+            const selectedTrain = response.data.find((train: { trainId: number }) => train.trainId === trainId);
+  
+            if (selectedTrain) {
+              this.selectedTrainSeats = selectedTrain.totalAvailableSeats;
+              // Optional: Open modal to display seat availability
+              // this.openchecking(); 
+            }
+          });
+          this.openchecking();
+      } else {
+        console.error('Invalid station names');
+      }
     }
+    
     // Function to open modal
   
     openchecking() {
@@ -162,5 +218,13 @@ export class SearchComponent implements OnInit {
       if (model != null) {
         model.style.display = 'none';
       }
+    }
+//check and convert station name to id
+
+    formatDate(date: Date): string {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
     }
 }

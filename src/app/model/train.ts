@@ -67,6 +67,12 @@ export interface ITrain {
       totalAvailableSeats: number;
     }
     
+    //check and convert station name to id
+    export interface Station {
+      stationID: number;
+      stationName: string;
+      stationCode: string;
+    }
 
 
 
