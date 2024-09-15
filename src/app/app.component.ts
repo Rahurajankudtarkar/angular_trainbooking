@@ -14,6 +14,7 @@ import { isPlatformBrowser } from '@angular/common';
   styleUrls: ['./app.component.css'] // Corrected "styleUrl" to "styleUrls"
 })
 export class AppComponent  {
+
   title = 'TRAIN_BOOKING_APP_ANGULAR';
   registerObj: Customer = new Customer();
   trainService = inject(TrainService);
@@ -104,7 +105,8 @@ export class AppComponent  {
       model.style.display = 'none';
     }
   }
-  //avaibility check
+//admin
+
   
   
 }

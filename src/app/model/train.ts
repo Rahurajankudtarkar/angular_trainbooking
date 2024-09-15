@@ -75,6 +75,20 @@ export interface ITrain {
     }
 
 
+    export interface Train {
+      trainId: number;
+      trainNo: number;
+      trainName: string;
+      departureStationId: number;
+      arrivalStationId: number;
+      departureTime: string;
+      arrivalTime: string;
+      totalSeats: number;
+      departureDate: string;
+    }
+    
+
+
 
 
 

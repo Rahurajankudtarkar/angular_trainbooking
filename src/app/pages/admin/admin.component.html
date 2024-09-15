@@ -1,0 +1,91 @@
+<!-- <div class="modal" id="addTrainModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add New Train</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closeAdminModal()"></button>
+      </div>
+      <div class="modal-body"> -->
+        <form [formGroup]="trainForm" (ngSubmit)="onSubmit()">
+          <!-- Train No -->
+          <div class="form-group">
+            <label for="trainNo">Train No</label>
+            <input type="text" id="trainNo" formControlName="trainNo" class="form-control">
+            <div *ngIf="trainForm.controls['trainNo'].invalid && trainForm.controls['trainNo'].touched">
+              <small class="text-danger">Train number is required</small>
+            </div>
+          </div>
+        
+          <!-- Train Name -->
+          <div class="form-group">
+            <label for="trainName">Train Name</label>
+            <input type="text" id="trainName" formControlName="trainName" class="form-control">
+            <div *ngIf="trainForm.controls['trainName'].invalid && trainForm.controls['trainName'].touched">
+              <small class="text-danger">Train name is required</small>
+            </div>
+          </div>
+        
+          <!-- Departure Station ID -->
+          <div class="form-group">
+            <label for="departureStationId">Departure Station ID</label>
+            <input type="text" id="departureStationId" formControlName="departureStationId" class="form-control">
+            <div *ngIf="trainForm.controls['departureStationId'].invalid && trainForm.controls['departureStationId'].touched">
+              <small class="text-danger">Departure station is required</small>
+            </div>
+          </div>
+        
+          <!-- Arrival Station ID -->
+          <div class="form-group">
+            <label for="arrivalStationId">Arrival Station ID</label>
+            <input type="text" id="arrivalStationId" formControlName="arrivalStationId" class="form-control">
+            <div *ngIf="trainForm.controls['arrivalStationId'].invalid && trainForm.controls['arrivalStationId'].touched">
+              <small class="text-danger">Arrival station is required</small>
+            </div>
+          </div>
+        
+          <!-- Departure Time -->
+          <div class="form-group">
+            <label for="departureTime">Departure Time</label>
+            <input type="text" id="departureTime" formControlName="departureTime" class="form-control">
+            <div *ngIf="trainForm.controls['departureTime'].invalid && trainForm.controls['departureTime'].touched">
+              <small class="text-danger">Departure time is required</small>
+            </div>
+          </div>
+        
+          <!-- Arrival Time -->
+          <div class="form-group">
+            <label for="arrivalTime">Arrival Time</label>
+            <input type="text" id="arrivalTime" formControlName="arrivalTime" class="form-control">
+            <div *ngIf="trainForm.controls['arrivalTime'].invalid && trainForm.controls['arrivalTime'].touched">
+              <small class="text-danger">Arrival time is required</small>
+            </div>
+          </div>
+        
+          <!-- Total Seats -->
+          <div class="form-group">
+            <label for="totalSeats">Total Seats</label>
+            <input type="number" id="totalSeats" formControlName="totalSeats" class="form-control">
+            <div *ngIf="trainForm.controls['totalSeats'].invalid && trainForm.controls['totalSeats'].touched">
+              <small class="text-danger">Total seats must be greater than 0</small>
+            </div>
+          </div>
+        
+          <!-- Departure Date -->
+          <div class="form-group">
+            <label for="departureDate">Departure Date</label>
+            <input type="date" id="departureDate" formControlName="departureDate" class="form-control">
+            <div *ngIf="trainForm.controls['departureDate'].invalid && trainForm.controls['departureDate'].touched">
+              <small class="text-danger">Departure date is required</small>
+            </div>
+          </div>
+        
+          <!-- Submit Button -->
+          <button type="submit" [disabled]="trainForm.invalid" class="btn btn-primary">Submit</button>
+        </form>
+        
+      <!-- </div>
+    </div>
+  </div>
+</div> -->
+<router-outlet></router-outlet>
+

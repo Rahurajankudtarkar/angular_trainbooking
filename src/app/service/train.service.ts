@@ -63,4 +63,9 @@ getStationIdByName(stationName: string): number | undefined {
   return station?.stationID;
 }
 
+////admin 
+addNewTrain(trainData: any): Observable<any> {
+  return this.http.post(`${this.apiUrl}AddNewTrain`, trainData);
+}
+
 }
